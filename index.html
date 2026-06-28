@@ -6,20 +6,19 @@
     <title>空港分室</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Shippori+Mincho:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=DotGothic16&family=Shippori+Mincho:wght@500;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
     
     <style>
-        /* 全体の設定と、アップロードした画像を背景に指定 */
+        /* 全体の設定と背景画像 */
         body {
             margin: 0;
             padding: 0;
             font-family: 'Shippori Mincho', serif;
-            /* 先ほどアップロードした画像を背景に設定 */
             background-image: url('background.png'); 
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
-            background-attachment: fixed; /* スクロールしても背景を固定 */
+            background-attachment: fixed;
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
@@ -34,7 +33,7 @@
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 40px; 
+            gap: 50px; 
             z-index: 100;
         }
 
@@ -46,7 +45,6 @@
             cursor: pointer;
         }
 
-        /* 吊り下げワイヤー */
         .nav-item::before {
             content: "";
             width: 1px;
@@ -54,143 +52,148 @@
             background: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0.8));
         }
 
-        /* 磨りガラス・透けたアクリル風のデザイン（グラスモフィズム） */
+        /* 磨りガラスデザイン */
         .nav-box {
-            background: rgba(255, 255, 255, 0.15); /* 背後が透ける薄い白 */
-            border: 1px solid rgba(255, 255, 255, 0.4); /* ガラスのエッジを表現 */
+            background: rgba(255, 255, 255, 0.12); 
+            border: 1px solid rgba(255, 255, 255, 0.4); 
             border-top: 2px solid rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(12px); /* 背景を綺麗にぼかす、ガラスの肝となる設定 */
-            -webkit-backdrop-filter: blur(12px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05), 
-                        inset 0 0 15px rgba(255, 255, 255, 0.2);
-            padding: 25px 15px;
-            width: 45px; 
+            backdrop-filter: blur(15px); 
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 
+                        inset 0 0 10px rgba(255, 255, 255, 0.2);
+            padding: 30px 18px; /* 太い文字に合わせて少し広めに */
+            width: 54px; 
             text-align: center;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* 看板の中の美しい縦書き日本語 */
+        /* タブ内の日本語：極太でかっこいい看板フォント */
         .nav-box span {
             writing-mode: vertical-rl;
             text-combine-upright: digits 2;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #0d1b2a; /* 視認性の高い、少し深い紺黒 */
-            letter-spacing: 0.3em;
-            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+            font-family: 'Dela Gothic One', sans-serif; /* ここを太いフォントに変更 */
+            font-size: 1.4rem;
+            color: #0d1b2a; 
+            letter-spacing: 0.2em; /* 太いので少しだけ詰めて密度を出す */
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            line-height: 1;
         }
 
-        /* ホバー時にガラスの透明度と質感が変わる */
         .nav-item:hover .nav-box {
-            background: rgba(255, 255, 255, 0.35);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            transform: translateY(4px); 
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transform: translateY(6px); /* 少し大きく沈み込ませる */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
         }
 
 
         /* ----------------------------------
-         * 右下：ベタ青・テプラ風お問い合わせ
+         * 右下：New York Times風フォントの「music」ボタン
          * ---------------------------------- */
-        .tepra-contact {
+        .tepra-music {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 35px;
+            right: 35px;
             background: #0000ff; 
             border: 2px solid #0000ff;
-            box-shadow: 2px 2px 0px #000; 
-            padding: 12px 18px;
+            box-shadow: 3px 3px 0px #000; 
+            padding: 8px 25px;
             text-decoration: none;
             z-index: 100;
             cursor: pointer;
-            transition: transform 0.1s;
+            transition: all 0.1s;
         }
 
-        .tepra-contact span {
-            font-family: 'DotGothic16', sans-serif;
+        .tepra-music span {
+            font-family: 'UnifrakturMaguntia', serif;
             color: #ffffff;
-            font-size: 1.1rem;
-            letter-spacing: 0.1em;
-            font-weight: bold;
+            font-size: 2.2rem;
+            font-weight: normal;
+            line-height: 1;
+            display: inline-block;
         }
 
-        .tepra-contact:hover {
+        .tepra-music:hover {
             transform: translate(-1px, -1px);
-            box-shadow: 3px 3px 0px #000;
+            box-shadow: 4px 4px 0px #000;
         }
 
-        .tepra-contact:active {
+        .tepra-music.playing {
+            background: #0000cc;
             transform: translate(2px, 2px);
             box-shadow: 0px 0px 0px #000;
         }
 
 
         /* ----------------------------------
-         * 中央：コンテンツ表示エリア（こちらも薄いガラス風に）
+         * 中央：コンテンツ表示エリア
          * ---------------------------------- */
         .main-container {
-            max-width: 650px;
+            max-width: 680px;
             margin: 0 auto;
-            padding-top: 260px; 
-            padding-bottom: 100px;
+            padding-top: 280px; 
+            padding-bottom: 120px;
         }
 
         section {
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.45);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 40px;
+            padding: 50px;
             margin-bottom: 40px;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
             display: none; 
         }
 
         section:target, section.active {
             display: block;
-            animation: fadeIn 0.6s ease both;
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         h2 {
-            font-size: 1.4rem;
+            font-family: 'Dela Gothic One', sans-serif; /* コンテンツの見出しも太くかっこよく */
+            font-size: 1.6rem;
             color: #0d1b2a;
-            border-bottom: 1px solid #0d1b2a;
+            border-bottom: 2px solid #0d1b2a;
             padding-bottom: 10px;
             margin-top: 0;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.1em;
         }
 
         p {
             color: #1c2d3d;
-            line-height: 2;
-            font-size: 0.95rem;
+            line-height: 2.2;
+            font-size: 1rem;
         }
 
         ul { list-style: none; padding: 0; }
-        li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed rgba(13,27,42,0.2); }
-        a { color: #0000ff; text-decoration: none; }
+        li { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px dashed rgba(13,27,42,0.2); }
+        a { color: #0000ff; text-decoration: none; font-weight: bold; }
         a:hover { text-decoration: underline; }
 
-        .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 5px; font-size: 0.9rem; }
+        /* フォーム */
+        .form-group { margin-bottom: 25px; }
+        label { font-family: 'Dela Gothic One', sans-serif; display: block; margin-bottom: 8px; font-size: 0.8rem; }
         input, textarea {
-            width: 100%; padding: 10px; border: 1px solid rgba(13,27,42,0.3); 
-            background: rgba(255,255,255,0.6); font-family: inherit; box-sizing: border-box;
+            width: 100%; padding: 12px; border: 1px solid rgba(13,27,42,0.2); 
+            background: rgba(255,255,255,0.7); font-family: 'Shippori Mincho', serif; box-sizing: border-box;
         }
         .submit-btn {
-            background: #0000ff; color: white; border: none; padding: 10px 20px; 
+            background: #0000ff; color: white; border: none; padding: 12px 30px; 
             font-family: 'DotGothic16', sans-serif; cursor: pointer; letter-spacing: 0.1em;
-            box-shadow: 2px 2px 0px #000;
+            box-shadow: 3px 3px 0px #000;
         }
-        .submit-btn:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0px #000; }
     </style>
 </head>
 <body>
+
+    <audio id="bgm" src="bgm.mp3" loop></audio>
 
     <nav class="ceiling-nav">
         <a class="nav-item" href="#profile" onclick="switchSection('profile')">
@@ -204,9 +207,9 @@
         </a>
     </nav>
 
-    <a class="tepra-contact" href="#contact" onclick="switchSection('contact')">
-        <span>お問い合わせフォーム</span>
-    </a>
+    <div class="tepra-music" id="musicBtn" onclick="toggleMusicAndContact()">
+        <span>music</span>
+    </div>
 
     <div class="main-container">
 
@@ -221,9 +224,9 @@
             <h2>日記</h2>
             <ul>
                 <li>
-                    <span style="font-size: 0.8rem; color: #556b7d; display: block;">2026.06.29</span>
+                    <span style="font-size: 0.8rem; color: #556b7d; display: block; font-weight: bold;">2026.06.29</span>
                     <a href="#">今日の日記（仮）</a>
-                    <p style="margin: 5px 0 0 0; font-size: 0.9rem; color: #2c3e50;">ここへ日記の文章が入ります。</p>
+                    <p style="margin: 5px 0 0 0; font-size: 0.95rem; color: #2c3e50;">ここへ日記の文章が入ります。</p>
                 </li>
             </ul>
         </section>
@@ -238,20 +241,20 @@
 
         <section id="contact">
             <h2>お問い合わせ</h2>
-            <form action="#" method="POST">
+            <form action="https://formspree.io/f/xxxxxxxx" method="POST">
                 <div class="form-group">
-                    <label for="name">お名前</label>
+                    <label for="name">NAME</label>
                     <input type="text" id="name" name="name" required>
                 </div>
                 <div class="form-group">
-                    <label for="email">メールアドレス</label>
+                    <label for="email">E-MAIL</label>
                     <input type="email" id="email" name="email" required>
                 </div>
                 <div class="form-group">
-                    <label for="message">メッセージ</label>
+                    <label for="message">MESSAGE</label>
                     <textarea id="message" name="message" rows="5" required></textarea>
                 </div>
-                <button type="submit" class="submit-btn">送信</button>
+                <button type="submit" class="submit-btn">SEND MESSAGE</button>
             </form>
         </section>
 
@@ -259,13 +262,29 @@
 
     <script>
         function switchSection(sectionId) {
-            const sections = document.querySelectorAll('main-container section, section');
+            const sections = document.querySelectorAll('section');
             sections.forEach(sec => {
                 sec.classList.remove('active');
             });
             const activeSection = document.getElementById(sectionId);
             if (activeSection) {
                 activeSection.classList.add('active');
+            }
+        }
+
+        function toggleMusicAndContact() {
+            const audio = document.getElementById('bgm');
+            const btn = document.getElementById('musicBtn');
+            
+            switchSection('contact');
+            window.location.hash = 'contact';
+
+            if (audio.paused) {
+                audio.play().catch(e => { console.log("Audio blocked."); });
+                btn.classList.add('playing');
+            } else {
+                audio.pause();
+                btn.classList.remove('playing');
             }
         }
         
