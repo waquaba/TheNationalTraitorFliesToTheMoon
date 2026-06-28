@@ -47,17 +47,17 @@
             content: "";
             width: 1px;
             height: 60px; 
-            background: linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(150,0,255,0.5));
+            background: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0.8));
         }
 
-        /* 磨りガラスデザイン：彩度の高い紫色トーン */
+        /* 磨りガラスデザイン：元の美しい白色アクリル風トーン */
         .nav-box {
-            background: rgba(140, 0, 255, 0.28) !important; 
-            border: 1px solid rgba(200, 100, 255, 0.5) !important; 
-            border-top: 2px solid rgba(220, 150, 255, 0.7) !important;
+            background: rgba(255, 255, 255, 0.15) !important; 
+            border: 1px solid rgba(255, 255, 255, 0.4) !important; 
+            border-top: 2px solid rgba(255, 255, 255, 0.6) !important;
             backdrop-filter: blur(15px); 
             -webkit-backdrop-filter: blur(15px);
-            box-shadow: 0 20px 40px rgba(110, 0, 255, 0.15), inset 0 0 15px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05), inset 0 0 15px rgba(255, 255, 255, 0.2);
             padding: 30px 18px; 
             width: 54px; 
             text-align: center;
@@ -65,25 +65,26 @@
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* タブ内の日本語：彩度高めの水色（明朝体） */
+        /* タブ内の日本語：美しい紺黒色（明朝体） */
         .nav-box span {
             writing-mode: vertical-rl;
             text-combine-upright: digits 2;
             font-family: 'Shippori Mincho', serif;
             font-weight: 700;
             font-size: 1.4rem;
-            color: #00f0ff; 
+            color: #0d1b2a; 
             letter-spacing: 0.3em;
-            text-shadow: 0 0 8px rgba(0, 240, 255, 0.6), 0 1px 2px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
             line-height: 1;
             display: inline-block;
         }
 
+        /* ホバー時にガラスの透明度が上品に上がる */
         .nav-item:hover .nav-box {
-            background: rgba(150, 0, 255, 0.45) !important;
-            border: 1px solid rgba(220, 100, 255, 0.8) !important;
+            background: rgba(255, 255, 255, 0.38) !important;
+            border: 1px solid rgba(255, 255, 255, 0.7) !important;
             transform: translateY(6px); 
-            box-shadow: 0 15px 30px rgba(110, 0, 255, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
         }
 
         /* 固定ボタンの共通テプラベース */
@@ -121,7 +122,7 @@
 
         .tepra-home { bottom: 35px; left: 35px; }
         
-        /* 右下：ミュージックエリア（位置をまとめるためのラッパー） */
+        /* 右下：ミュージックエリア */
         .music-wrapper {
             position: fixed;
             bottom: 35px;
@@ -153,7 +154,7 @@
             text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); 
         }
 
-        /* 再生中（playing）のときだけライセンスを表示する */
+        /* 再生中のときだけライセンスを表示 */
         .music-wrapper.playing .music-license {
             opacity: 0.7; 
         }
