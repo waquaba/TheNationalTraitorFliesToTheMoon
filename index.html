@@ -21,6 +21,7 @@
         }
 
         body {
+            /* 【編集】背景画像のファイル名 */
             background-image: url('background.png'); 
             background-size: cover;
             background-position: center center;
@@ -47,10 +48,11 @@
             cursor: pointer;
         }
 
+        /* 💡 修正：吊り下げる糸の長さを1/3（60px → 20px）に短縮 */
         .nav-item::before {
             content: "";
             width: 1px;
-            height: 60px; 
+            height: 20px; 
             background: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0.8));
         }
 
@@ -113,15 +115,28 @@
         }
 
         .tepra-home { bottom: 35px; left: 35px; }
-        .music-wrapper { position: fixed; bottom: 35px; right: 35px; display: flex; flex-direction: column; align-items: flex-end; z-index: 100; }
+        
+        /* 💡 修正：ミュージックエリア全体を少し上に上げる（bottom: 35px → 55px） */
+        .music-wrapper { 
+            position: fixed; 
+            bottom: 55px; 
+            right: 35px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: flex-end; 
+            z-index: 100; 
+        }
+        
+        .tepra-music { position: relative; }
+
         .music-license { font-size: 0.6rem; color: #0d1b2a; margin-top: 6px; opacity: 0; transition: opacity 0.5s ease; white-space: nowrap; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); }
         .music-wrapper.playing .music-license { opacity: 0.7; }
         .tepra-music.playing { background: #0000cc; transform: translate(2px, 2px); box-shadow: 0px 0px 0px #000; }
 
-        /* 中央コンテンツエリア */
+        /* 💡 修正：本文の欄を少し上に伸ばす（糸を削った分の半分にあたる35pxほど上に引き上げ top: 260px → 225px） */
         .main-container {
             position: fixed;
-            top: 260px; 
+            top: 225px; 
             bottom: 120px; 
             left: 50%;
             transform: translateX(-50%);
@@ -175,6 +190,7 @@
 
         p { color: #1c2d3d; line-height: 2.2; font-size: 1rem; }
         ul { list-style: none; padding: 0; }
+        li { margin-bottom: 25px; }
         
         /* 一覧リストの並び */
         .item-list-wrapper { margin-top: 20px; }
@@ -248,7 +264,8 @@
             <h2>ようこそ</h2>
             <p>
                 お立ち寄りいただき、ありがとうございます。<br>
-                ここは、眩しく清潔な空港の片隅に設けられた、個人的な記録と記憶のための分室です。
+                ここは、眩しく清潔な空港の片隅に設けられた、個人的な記録と記憶のための分室です。<br>
+                天井のタブからそれぞれのページへ、右下のボタンから背景に流れる音の制御が可能です。どうぞご自由にお過ごしください。
             </p>
         </section>
 
@@ -326,13 +343,11 @@
             眩しくて清潔な空港の背景を眺めていると、本当にどこか遠くのターミナルに座っているような奇妙な静けさがある。<br><br>
             明朝体の文字としっとりした白いすりガラスの組み合わせは、思った以上にノスタルジックで落ち着く空間になってくれた。これから少しずつ、数学のノートや音楽のアイデアをここに書き溜めていこうと思う。
         </div>
-
         <div id="data-diary-0630">
             Ableton Liveを開いて、昨日録音した環境音のミキシング作業。<br>
             ローカットを少し強めに入れて、中高域の透明感を強調するアプローチを試す。このサイトの背景の空気感に合うような、少し冷たくて綺麗なアンビエントトラックを作りたい。<br><br>
-            明日は久しぶりに長文の数学の考察（幾何学的なトピックか、それとも解析的なものか）を雑記帳の方にまとめてみる予定。
+            明日は久しぶりに長文の数学の考察を雑記帳の方にまとめてみる予定。
         </div>
-
         <div id="data-music-01">対位法の美学についての本文。<br>バッハの楽曲に見る数学的構造について…。</div>
         <div id="data-music-02">音響合成についてのメモです。FM合成の金属的な響きについて。</div>
         <div id="data-math-01">素数は1とその数自身でしか割り切れない孤独な数字です。</div>
