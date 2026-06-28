@@ -172,4 +172,162 @@
         }
 
         h2 {
-            font-family: 'Shippori
+            font-family: 'Shippori Mincho', serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #0d1b2a;
+            border-bottom: 2px solid #0d1b2a;
+            padding-bottom: 10px;
+            margin-top: 0;
+            letter-spacing: 0.15em;
+        }
+
+        p {
+            color: #1c2d3d;
+            line-height: 2.2;
+            font-size: 1rem;
+        }
+
+        ul { list-style: none; padding: 0; }
+        li { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px dashed rgba(13,27,42,0.2); }
+        a { color: #0000ff; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+
+        /* フォーム */
+        .form-group { margin-bottom: 25px; }
+        label { font-family: 'Shippori Mincho', serif; font-weight: 700; display: block; margin-bottom: 8px; font-size: 0.85rem; color: #0d1b2a; }
+        input, textarea {
+            width: 100%; padding: 12px; border: 1px solid rgba(13,27,42,0.2); 
+            background: rgba(255,255,255,0.7); font-family: 'Shippori Mincho', serif; box-sizing: border-box;
+        }
+        .submit-btn {
+            background: #0000ff; color: white; border: none; padding: 12px 30px; 
+            font-family: 'Shippori Mincho', serif; font-weight: 700; cursor: pointer; letter-spacing: 0.1em;
+            box-shadow: 3px 3px 0px #000;
+        }
+        .submit-btn:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0px #000; }
+    </style>
+</head>
+<body>
+
+    <audio id="bgm" src="bgm.mp3" loop></audio>
+
+    <nav class="ceiling-nav">
+        <div class="nav-item" onclick="switchSection('profile')">
+            <div class="nav-box"><span>自己紹介</span></div>
+        </div>
+        <div class="nav-item" onclick="switchSection('diary')">
+            <div class="nav-box"><span>日記</span></div>
+        </div>
+        <div class="nav-item" onclick="switchSection('miscellany')">
+            <div class="nav-box"><span>雑記帳</span></div>
+        </div>
+    </nav>
+
+    <div class="tepra-button tepra-home" onclick="switchSection('home')">
+        <span>ホームに戻る</span>
+    </div>
+
+    <div class="tepra-button tepra-music" id="musicBtn" onclick="toggleMusic()">
+        <span>ミュージック</span>
+    </div>
+
+    <div class="main-container">
+
+        <section id="home" class="content-section active">
+            <h2>ようこそ</h2>
+            <p>
+                お立ち寄りいただき、ありがとうございます。<br>
+                ここは、眩しく清潔な空港の片隅に設けられた、個人的な記録と記憶のための分室です。<br>
+                天井のタブからそれぞれのページへ、右下のボタンから背景に流れる音の制御が可能です。どうぞご自由にお過ごしください。
+            </p>
+        </section>
+
+        <section id="profile" class="content-section">
+            <h2>自己紹介</h2>
+            <p>
+                ここに簡単な自己紹介を書いてください。現在の所属、関心のあるテーマ、あるいは日々の活動についての短いテキストを置く場所です。
+            </p>
+        </section>
+
+        <section id="diary" class="content-section">
+            <h2>日記</h2>
+            <ul>
+                <li>
+                    <span style="font-size: 0.8rem; color: #556b7d; display: block; font-weight: bold;">2026.06.29</span>
+                    <a href="#">今日の日記（仮）</a>
+                    <p style="margin: 5px 0 0 0; font-size: 0.95rem; color: #2c3e50;">ここへ日記の文章が入ります。</p>
+                </li>
+            </ul>
+        </section>
+
+        <section id="miscellany" class="content-section">
+            <h2>雑記帳</h2>
+            <ul>
+                <li><a href="#">思考の断片についてのノート</a></li>
+                <li><a href="#">いつか整理するかもしれない概念</a></li>
+            </ul>
+        </section>
+
+        <section id="contact" class="content-section">
+            <h2>お問い合わせ</h2>
+            <form action="https://formspree.io/f/xxxxxxxx" method="POST">
+                <div class="form-group">
+                    <label for="name">お名前</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">メールアドレス</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">メッセージ</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">送信する</button>
+            </form>
+        </section>
+
+    </div>
+
+    <script>
+        // タブ切り替え用の修正版スクリプト
+        function switchSection(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(sec => {
+                sec.classList.remove('active');
+            });
+            const activeSection = document.getElementById(sectionId);
+            if (activeSection) {
+                activeSection.classList.add('active');
+                window.location.hash = sectionId;
+            }
+        }
+
+        // ミュージックボタン：音のオンオフだけに独立
+        function toggleMusic() {
+            const audio = document.getElementById('bgm');
+            const btn = document.getElementById('musicBtn');
+            
+            if (audio.paused) {
+                audio.play().catch(e => { console.log("Audio blocked."); });
+                btn.classList.add('playing');
+            } else {
+                audio.pause();
+                btn.classList.remove('playing');
+            }
+        }
+        
+        // 読み込み時のハッシュ処理
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash && document.getElementById(hash)) {
+                switchSection(hash);
+            } else {
+                switchSection('home');
+            }
+        });
+    </script>
+
+</body>
+</html>
