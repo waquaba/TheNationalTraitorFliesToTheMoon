@@ -10,28 +10,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&display=swap" rel="stylesheet">
     
     <style>
-        body {
+        /* 画面全体のリセット：外側を絶対にスクロールさせない設定 */
+        html, body {
             margin: 0;
             padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; 
             font-family: 'Shippori Mincho', serif;
+        }
+
+        body {
+            /* 【編集】背景画像のファイル名 */
             background-image: url('background.png'); 
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
-            background-attachment: fixed;
-            min-height: 100vh;
-            overflow-x: hidden;
             position: relative;
         }
 
-        /* 天井の吊り下げタブ */
+        /* 🆕 天井の吊り下げタブ（4つ並ぶのでgapを少し調整） */
         .ceiling-nav {
             position: fixed;
             top: 0;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 50px; 
+            gap: 40px; 
             z-index: 9999;
         }
 
@@ -50,6 +55,7 @@
             background: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0.8));
         }
 
+        /* 磨りガラスデザイン：白色アクリル風トーン */
         .nav-box {
             background: rgba(255, 255, 255, 0.15) !important; 
             border: 1px solid rgba(255, 255, 255, 0.4) !important; 
@@ -67,7 +73,6 @@
         .nav-box span {
             writing-mode: vertical-rl;
             text-combine-upright: digits 2;
-            font-family: 'Shippori Mincho', serif;
             font-weight: 700;
             font-size: 1.4rem;
             color: #0d1b2a; 
@@ -83,7 +88,7 @@
             transform: translateY(6px); 
         }
 
-        /* 固定ボタン共通 */
+        /* 固定ボタン共通（テプラ風） */
         .tepra-button {
             position: fixed;
             background: #0000ff; 
@@ -96,7 +101,6 @@
         }
 
         .tepra-button span {
-            font-family: 'Shippori Mincho', serif;
             font-weight: 700;
             color: #ffffff;
             font-size: 1.1rem;
@@ -111,42 +115,56 @@
 
         .tepra-home { bottom: 35px; left: 35px; }
         .music-wrapper { position: fixed; bottom: 35px; right: 35px; display: flex; flex-direction: column; align-items: flex-end; z-index: 100; }
-        .music-license { font-family: 'Shippori Mincho', serif; font-size: 0.6rem; color: #0d1b2a; margin-top: 6px; opacity: 0; transition: opacity 0.5s ease; white-space: nowrap; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); }
+        .music-license { font-size: 0.6rem; color: #0d1b2a; margin-top: 6px; opacity: 0; transition: opacity 0.5s ease; white-space: nowrap; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); }
         .music-wrapper.playing .music-license { opacity: 0.7; }
         .tepra-music.playing { background: #0000cc; transform: translate(2px, 2px); box-shadow: 0px 0px 0px #000; }
 
-        /* コンテンツ表示エリア */
+        /* 中央コンテンツエリア：画面の定位置に完全に固定 */
         .main-container {
+            position: fixed;
+            top: 260px; 
+            bottom: 120px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
             max-width: 680px;
-            margin: 0 auto;
-            padding-top: 280px; 
-            padding-bottom: 120px;
+            z-index: 10;
         }
 
+        /* すりガラスの枠自体 */
         .content-section {
             background: rgba(255, 255, 255, 0.45);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 50px;
-            margin-bottom: 40px;
+            border-radius: 4px;
+            padding: 40px 50px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
+            
+            height: 100%;
+            box-sizing: border-box;
+            overflow-y: auto; 
+            -webkit-overflow-scrolling: touch;
+            
             display: none; 
             position: relative;
         }
 
         .content-section.active {
             display: block !important;
-            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+            animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
+        .content-section::-webkit-scrollbar { width: 5px; }
+        .content-section::-webkit-scrollbar-track { background: transparent; }
+        .content-section::-webkit-scrollbar-thumb { background: rgba(0, 0, 255, 0.15); border-radius: 10px; }
+
         h2 {
-            font-family: 'Shippori Mincho', serif;
             font-weight: 700;
             font-size: 1.5rem;
             color: #0d1b2a;
@@ -160,30 +178,11 @@
         ul { list-style: none; padding: 0; }
         li { margin-bottom: 25px; }
 
-        /* ----------------------------------
-         * 雑記帳：ツリー構造のデザイン
-         * ---------------------------------- */
-        .tree-list {
-            margin-top: 20px;
-        }
-
-        .tree-category {
-            font-weight: 700;
-            color: #0d1b2a;
-            font-size: 1.2rem;
-            margin-top: 30px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-        }
-
-        .tree-category::before {
-            content: "◆";
-            color: #0000ff;
-            margin-right: 10px;
-            font-size: 0.9rem;
-        }
-
+        /* 雑記帳：ツリー構造のデザイン */
+        .tree-list { margin-top: 20px; }
+        .tree-category { font-weight: 700; color: #0d1b2a; font-size: 1.2rem; margin-top: 30px; margin-bottom: 10px; display: flex; align-items: center; }
+        .tree-category::before { content: "◆"; color: #0000ff; margin-right: 10px; font-size: 0.9rem; }
+        
         .tree-item-link {
             color: #0000ff;
             text-decoration: none;
@@ -191,69 +190,45 @@
             cursor: pointer;
             padding-left: 25px;
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             border-left: 1px solid rgba(0, 0, 255, 0.2);
         }
+        .tree-item-link:hover { text-decoration: underline; background: rgba(0, 0, 255, 0.03); }
 
-        .tree-item-link:hover {
-            text-decoration: underline;
-            background: rgba(0, 0, 255, 0.03);
-        }
+        /* 雑記帳：詳細表示 */
+        .detail-view { display: none; }
+        .detail-view.active { display: block; }
 
-        /* ----------------------------------
-         * 雑記帳：詳細表示のデザイン
-         * ---------------------------------- */
-        .detail-view {
-            display: none; /* 初期は非表示 */
-        }
-
-        .detail-view.active {
-            display: block;
-        }
-
-        /* 左上の戻るボタン */
         .back-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
             color: #0000ff;
             font-size: 0.9rem;
             font-weight: bold;
             cursor: pointer;
-            text-decoration: none;
-            display: flex;
+            display: inline-flex;
             align-items: center;
+            margin-bottom: 20px;
         }
+        .back-button::before { content: "←"; margin-right: 5px; }
+        .back-button:hover { text-decoration: underline; }
 
-        .back-button::before {
-            content: "←";
-            margin-right: 5px;
-        }
+        .detail-title { font-size: 1.7rem; font-weight: 700; color: #0d1b2a; margin-bottom: 25px; }
+        .detail-content-text { line-height: 2.2; color: #1c2d3d; }
 
-        .back-button:hover {
-            text-decoration: underline;
-        }
-
-        .detail-title {
-            font-size: 1.7rem;
-            font-weight: 700;
-            color: #0d1b2a;
-            margin-top: 20px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        /* 本文が入るスワイプ可能なすりガラスボックス */
-        .detail-scroll-box {
-            background: rgba(255, 255, 255, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 4px;
-            padding: 30px;
-            max-height: 400px; /* 超えるとスクロール */
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            line-height: 2.2;
-            color: #1c2d3d;
+        /* お問い合わせフォーム */
+        .form-group { margin-bottom: 25px; }
+        label { font-weight: 700; display: block; margin-bottom: 8px; font-size: 0.85rem; color: #0d1b2a; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid rgba(13,27,42,0.2); background: rgba(255,255,255,0.7); font-family: inherit; box-sizing: border-box; }
+        .submit-btn { background: #0000ff; color: white; border: none; padding: 12px 30px; font-weight: 700; cursor: pointer; letter-spacing: 0.1em; box-shadow: 3px 3px 0px #000; }
+        .submit-btn:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0px #000; }
+        
+        /* 🆕 お問い合わせの形骸的メッセージ */
+        .contact-disclaimer {
+            font-size: 0.8rem;
+            color: #556b7d;
+            line-height: 1.8;
+            margin-top: 25px;
+            border-top: 1px dashed rgba(13,27,42,0.15);
+            padding-top: 15px;
         }
     </style>
 </head>
@@ -265,6 +240,7 @@
         <div class="nav-item" onclick="switchSection('profile')"><div class="nav-box"><span>自己紹介</span></div></div>
         <div class="nav-item" onclick="switchSection('diary')"><div class="nav-box"><span>日記</span></div></div>
         <div class="nav-item" onclick="switchSection('miscellany')"><div class="nav-box"><span>雑記帳</span></div></div>
+        <div class="nav-item" onclick="switchSection('contact')"><div class="nav-box"><span>お問い合わせ</span></div></div>
     </nav>
 
     <div class="tepra-button tepra-home" onclick="switchSection('home')"><span>ホームに戻る</span></div>
@@ -280,7 +256,8 @@
             <h2>ようこそ</h2>
             <p>
                 お立ち寄りいただき、ありがとうございます。<br>
-                ここは、眩しく清潔な空港の片隅に設けられた、個人的な記録と記憶のための分室です。
+                ここは、眩しく清潔な空港の片隅に設けられた、個人的な記録と記憶のための分室です。<br>
+                天井のタブからそれぞれのページへ、右下のボタンから背景に流れる音の制御が可能です。どうぞご自由にお過ごしください。
             </p>
         </section>
 
@@ -295,14 +272,12 @@
         </section>
 
         <section id="miscellany" class="content-section">
-            
             <div id="miscellany-list">
                 <h2>雑記帳</h2>
-                
                 <div class="tree-list">
                     <div class="tree-category">音楽</div>
                     <div class="tree-item-link" onclick="showMiscDetail('対位法の美学', 'music-01')">対位法の美学</div>
-                    <div class="tree-item-link" onclick="showMiscDetail('音響合成の記録', 'music-02')">音響合成の記録</div>
+                    <div class="tree-item-link" onclick="showMiscDetail('音響合成 of 記録', 'music-02')">音響合成の記録</div>
 
                     <div class="tree-category">数学</div>
                     <div class="tree-item-link" onclick="showMiscDetail('素数についての考察', 'math-01')">素数についての考察</div>
@@ -313,9 +288,31 @@
             <div id="miscellany-detail" class="detail-view">
                 <div class="back-button" onclick="hideMiscDetail()">雑記帳に戻る</div>
                 <div id="detail-title-area" class="detail-title"></div>
-                <div id="detail-body-area" class="detail-scroll-box"></div>
+                <div id="detail-body-area" class="detail-content-text"></div>
             </div>
+        </section>
 
+        <section id="contact" class="content-section">
+            <h2>お問い合わせ</h2>
+            <form action="#" method="POST">
+                <div class="form-group">
+                    <label for="name">お名前</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">メールアドレス</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">メッセージ</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">送信する</button>
+                
+                <div class="contact-disclaimer">
+                    ※こちらのお問い合わせは形骸的なものであり、私にも届きません。お問い合わせたい心のうちがあれば、なんでもどうぞ。
+                </div>
+            </form>
         </section>
 
     </div>
@@ -323,7 +320,7 @@
     <div style="display:none;">
         <div id="data-music-01">対位法の美学についての本文をここに書きます。<br>バッハの楽曲に見る数学的構造について…。</div>
         <div id="data-music-02">音響合成についてのメモです。FM合成の金属的な響きについて。</div>
-        <div id="data-math-01">素数は孤独な数字です。</div>
+        <div id="data-math-01">素数は1とその数自身でしか割り切れない孤独な数字です。</div>
         <div id="data-math-02">リーマン予想についての考察です。</div>
     </div>
 
@@ -335,12 +332,11 @@
             if (activeSection) {
                 activeSection.classList.add('active');
                 window.location.hash = sectionId;
-                // 雑記帳タブを押したときは、常にリスト表示に戻す
+                activeSection.scrollTop = 0; 
                 if(sectionId === 'miscellany') hideMiscDetail();
             }
         }
 
-        // 🆕 雑記帳：詳細を表示する関数
         function showMiscDetail(title, dataId) {
             const listArea = document.getElementById('miscellany-list');
             const detailArea = document.getElementById('miscellany-detail');
@@ -353,16 +349,17 @@
 
             listArea.style.display = 'none';
             detailArea.classList.add('active');
-            bodyArea.scrollTop = 0; // スクロール位置を一番上にリセット
+            
+            document.getElementById('miscellany').scrollTop = 0;
         }
 
-        // 🆕 雑記帳：リストに戻る関数
         function hideMiscDetail() {
             const listArea = document.getElementById('miscellany-list');
             const detailArea = document.getElementById('miscellany-detail');
 
             detailArea.classList.remove('active');
             listArea.style.display = 'block';
+            document.getElementById('miscellany').scrollTop = 0;
         }
 
         function toggleMusic() {
