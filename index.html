@@ -369,7 +369,7 @@
                     <input type="text" id="name" name="name">
                 </div>
                 <div class="form-group">
-                    <label for="email">メールアドレス（空欄や適当でも可）</label>
+                    <label for="email">メールアドレス（任意）</label>
                     <input type="text" id="email" name="email">
                 </div>
                 <div class="form-group">
@@ -443,7 +443,7 @@
                 })
                 .catch(error => {
                     titleArea.innerText = "読み込みエラー";
-                    bodyArea.innerHTML = "ファイルの取得に失敗しました。以下の住所に間違いがないか確認してください。<br>パス: <strong>" + fileUrl + "</strong>";
+                    bodyArea.innerHTML = "存在しない架空の記事です．<br>パス: <strong>" + fileUrl + "</strong>";
                     listArea.style.display = 'none';
                     detailArea.classList.add('active');
                 });
