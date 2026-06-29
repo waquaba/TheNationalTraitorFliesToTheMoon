@@ -188,45 +188,52 @@
         
         .item-list-wrapper { margin-top: 20px; }
         
-        /* 日記：グリッド */
-        .diary-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 25px;
+        /* 階層ツリー（アコーディオン）用の共通スタイル */
+        .tree-node {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
 
-        .diary-date-link {
+        .tree-node summary {
             color: #0000ff;
-            text-decoration: none;
             font-weight: bold;
             cursor: pointer;
-            padding: 8px 16px;
-            background: rgba(255, 255, 255, 0.3);
-            border: 1px solid rgba(0, 0, 255, 0.15);
-            border-radius: 4px;
-            transition: all 0.2s;
+            outline: none;
+            user-select: none;
+            padding: 4px 8px;
+            display: inline-block;
         }
-        .diary-date-link:hover {
-            background: rgba(0, 0, 255, 0.05);
-            border-color: #0000ff;
+        
+        .tree-node summary::-webkit-details-marker { display: none; }
+        
+        /* フォルダ絵文字の制御 */
+        .tree-node summary::before { content: "📁 "; font-size: 0.9rem; }
+        .tree-node[open] > summary::before { content: "📂 "; }
+        .tree-node summary:hover { text-decoration: underline; background: rgba(0, 0, 255, 0.03); }
+
+        /* 子階層のインデント（線ガイド） */
+        .tree-content {
+            padding-left: 20px;
+            border-left: 1px dashed rgba(0, 0, 255, 0.2);
+            margin-left: 14px;
+            margin-top: 5px;
+            margin-bottom: 5px;
         }
 
-        /* 共通縦リンク */
+        /* 最深部：クリックして開くファイルリンク */
         .clickable-link {
             color: #0000ff;
             text-decoration: none;
             font-weight: bold;
             cursor: pointer;
-            display: block;
-            margin-bottom: 15px;
-            padding-left: 15px;
-            border-left: 1px solid rgba(0, 0, 255, 0.2);
+            display: inline-block;
+            margin-top: 6px;
+            margin-bottom: 6px;
+            padding: 2px 6px;
         }
-        .clickable-link:hover { text-decoration: underline; background: rgba(0, 0, 255, 0.03); }
-
-        .tree-category { font-weight: 700; color: #0d1b2a; font-size: 1.2rem; margin-top: 30px; margin-bottom: 10px; display: flex; align-items: center; }
-        .tree-category::before { content: "◆"; color: #0000ff; margin-right: 10px; font-size: 0.9rem; }
+        .clickable-link::before { content: "📄 "; }
+        .clickable-link:hover { text-decoration: underline; background: rgba(0, 0, 255, 0.05); }
 
         .detail-view { display: none; }
         .detail-view.active { display: block; }
@@ -291,8 +298,23 @@
         <section id="diary" class="content-section">
             <div id="diary-list">
                 <h2>日記</h2>
-                <div class="diary-grid">
-                    <div class="diary-date-link" onclick="showDetail('diary', 'diary/2026/0629')">06.29</div>
+                <div class="item-list-wrapper">
+                    
+                    <details class="tree-node">
+                        <summary>2026年</summary>
+                        <div class="tree-content">
+                            
+                            <details class="tree-node">
+                                <summary>06月</summary>
+                                <div class="tree-content">
+                                    <div class="clickable-link" onclick="showDetail('diary', 'diary/2026/06/29')">29日</div>
+                                    <div class="clickable-link" onclick="showDetail('diary', 'diary/2026/06/30')">30日</div>
+                                </div>
+                            </details>
+
+                        </div>
+                    </details>
+                    
                 </div>
             </div>
 
@@ -307,8 +329,35 @@
             <div id="miscellany-list">
                 <h2>雑記帳</h2>
                 <div class="item-list-wrapper">
-                    <div class="tree-category">数学</div>
-                    <div class="clickable-link" onclick="showDetail('miscellany', 'misc/数学/幾何解析/測度距離空間/測度距離空間のモジュライの位相')">測度距離空間のモジュライの位相</div>
+                    
+                    <details class="tree-node">
+                        <summary>数学</summary>
+                        <div class="tree-content">
+                            
+                            <details class="tree-node">
+                                <summary>幾何解析</summary>
+                                <div class="tree-content">
+                                    
+                                    <details class="tree-node">
+                                        <summary>測度距離空間</summary>
+                                        <div class="tree-content">
+                                            <div class="clickable-link" onclick="showDetail('miscellany', 'misc/数学/幾何解析/測度距離空間/測度距離空間のモジュライの位相')">測度距離空間のモジュライの位相</div>
+                                        </div>
+                                    </details>
+                                    
+                                </div>
+                            </details>
+
+                        </div>
+                    </details>
+
+                    <details class="tree-node">
+                        <summary>音楽</summary>
+                        <div class="tree-content">
+                            <div class="clickable-link" onclick="showDetail('miscellany', 'misc/music-02.html')">音響合成の記録</div>
+                        </div>
+                    </details>
+                    
                 </div>
             </div>
 
@@ -363,9 +412,17 @@
             const bodyArea = document.getElementById(type + '-body-area');
 
             let extractedTitle = fileUrl.substring(fileUrl.lastIndexOf('/') + 1);
+            if (extractedTitle.endsWith('.html')) {
+                extractedTitle = extractedTitle.replace('.html', '');
+            }
             
-            if (type === 'diary' && extractedTitle.length === 4) {
-                extractedTitle = "2026." + extractedTitle.substring(0, 2) + "." + extractedTitle.substring(2);
+            // 🆕 日記のパス（例: diary/2026/06/29）から全体の階層を抜き出して綺麗な日付タイトルを自動生成
+            if (type === 'diary') {
+                const parts = fileUrl.split('/');
+                // parts は ["diary", "2026", "06", "29"] になるので、後ろから3つを結合
+                if (parts.length >= 4) {
+                    extractedTitle = parts[parts.length - 3] + "." + parts[parts.length - 2] + "." + parts[parts.length - 1];
+                }
             }
 
             fetch(fileUrl)
@@ -377,7 +434,6 @@
                     titleArea.innerText = extractedTitle; 
                     bodyArea.innerHTML = htmlContent;
 
-                    // 💡 修正箇所：正しい命令で内部の $ や $$ をコンパイル
                     if (window.renderMathInElement) {
                         window.renderMathInElement(bodyArea, {
                             delimiters: [
